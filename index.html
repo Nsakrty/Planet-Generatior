@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="https://user-assets.sxlcdn.com/images/703562/Fu2HV9A-vqwVbKoCjNPG1CmqWe9j.jpg?imageMogr2/strip/auto-orient/thumbnail/64x64>/interlace/1/format/jpg" type="image/x-icon" />
+    <title>行星生成器</title>
+    <style>
+      :root {
+        --size: 40;
+        --color: #ff8000;
+        --atmosphereSize: 3;
+        --iframeSize: 80;
+        --x: calc(var(--iframeSize) / 2 * 1vmin - var(--size) / 2 * 1vmin);
+        --y: calc(var(--iframeSize) / 2 * 1vmin - var(--size) / 2 * 1vmin);
+        --cloudRotate: 0;
+        --detailRotate: 0;
+        --shadowRotate: 0;
+      }
+      #result {
+        width: calc(var(--iframeSize) * 1vmin);
+        height: calc(var(--iframeSize) * 1vmin);
+        border: 2px solid #ccc;
+        border-radius: 6px;
+        margin: 0 auto;
+        position: relative;
+        background: #000;
+      }
+      #star {
+        border-radius: 50%;
+        background-color: var(--color);
+        /* 垂直居中 */
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        margin: auto;
+        /* 垂直居中 */
+        box-shadow: var(--color) 0px 0px calc(var(--atmosphereSize) * 1vmin);
+      }
+      #cloud {
+        z-index: 10;
+        opacity: 0;
+        transform: rotate(calc(var(--cloudRotate) * 1deg));
+        /* opacity: var; */
+      }
+      #detail {
+        z-index: 5;
+        opacity: 0;
+        transform: rotate(calc(var(--detailRotate) * 1deg));
+      }
+      #shadow {
+        z-index: 20;
+        transform: rotate(calc(var(--shadowRotate) * 1deg));
+      }
+      body {
+        background-color: #fff;
+      }
+      #star,
+      #cloud,
+      #detail,
+      #shadow {
+        position: absolute;
+        width: calc(var(--size) * 1vmin);
+        height: calc(var(--size) * 1vmin);
+        transition: all 0.5s;
+      }
+      /* button {
+        background-color: #2b2;
+        border: none;
+        padding: 8px;
+        border-radius: 6px;
+        transition: all 0.2s;
+      }
+      button:hover {
+        background-color: #181
+      }
+      button:active {
+        background-color: #060
+      } */
+    </style>
+  </head>
+  <body onload="loading()" style="display: none">
+    <div id="result">
+      <div id="star">
+        <img id="shadow" src="picture/shadow.png" />
+        <img id="cloud" src="picture/cloud.png" />
+        <img id="detail" src="picture/detail.png" />
+      </div>
+    </div>
+    <hr />
+    <button onclick="randomStar()">随机生成</button>
+    <button onclick="document.location.search = ''">清空参数</button>
+    <hr />
+    <form onchange="generate()" id="editor">
+      <button>保存</button><br />
+      <label for="color">颜色:</label><input type="color" name="color" id="color" value="#ff8000" /><br />
+      <label for="size">大小:</label>0<input type="range" name="size" id="size" value="40" max="40" min="0" />40vmin<br />
+      <label for="atmosphereSize">大气层厚度:</label>0<input type="range" name="atmosphereSize" id="atmosphereSize" value="3" max="10" min="0" />10vmin<br />
+      <label for="cloudDisp">云层:</label><input type="checkbox" name="cloudDisp" id="cloudDisp" /><br />
+      <label for="cloudRotate">云层旋转:</label>-90<input type="range" name="cloudRotate" id="cloudRotate" value="0" max="90" min="-90" />90deg<br />
+      <label for="detailDisp">细节:</label><input type="checkbox" name="detailDisp" id="detailDisp" /><br />
+      <label for="detailRotate">细节旋转:</label>-90<input type="range" name="detailRotate" id="detailRotate" value="0" max="90" min="-90" />90deg<br />
+      <label for="shadowRotate">阴影旋转:</label>-90<input type="range" name="shadowRotate" id="shadowRotate" value="0" max="90" min="-90" />90deg<br />
+    </form>
+    <hr />
+    <script src="script/script.js"></script>
+  </body>
+</html>
